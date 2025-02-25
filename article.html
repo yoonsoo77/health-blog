@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>문제 상세 페이지</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>문제 상세 정보</h1>
+    <button onclick="goBack()">목록으로 돌아가기</button>
+  </header>
+
+  <main>
+    <div id="article-container">
+      <h2 id="article-title"></h2>
+      <p><strong>학술명:</strong> <span id="article-scientific"></span></p>
+      <p><strong>문제 개요:</strong> <span id="article-description"></span></p>
+      <p><strong>원인 분석:</strong> <span id="article-cause"></span></p>
+      <p><strong>관련 해외 논문:</strong> <span id="article-research"></span></p>
+      <p><strong>해결 방안:</strong> <span id="article-solution"></span></p>
+      <p><strong>추천 아이템:</strong> <span id="article-items"></span></p>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const part = params.get("part");
+      const index = params.get("index");
+
+      if (!part || index === null) {
+        document.getElementById("article-container").innerHTML = "<p>유효하지 않은 요청입니다.</p>";
+        return;
+      }
+
+      const issue = issuesData[part] && issuesData[part][index];
+      if (!issue) {
+        document.getElementById("article-container").innerHTML = "<p>해당 문제를 찾을 수 없습니다.</p>";
+        return;
+      }
+
+      document.getElementById("article-title").textContent = issue.title;
+      document.getElementById("article-scientific").textContent = issue.scientificName;
+      document.getElementById("article-description").textContent = issue.description;
+      document.getElementById("article-cause").textContent = issue.causeAnalysis;
+      document.getElementById("article-research").textContent = issue.research;
+      document.getElementById("article-solution").textContent = issue.solution;
+      document.getElementById("article-items").textContent = issue.items;
+    });
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
