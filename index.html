@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>우리 몸 문제 해결 블로그</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>우리 몸 문제 해결</h1>
+    <p>병명으로 찾기 / 증상으로 찾기를 통해 문제를 검색해보세요.</p>
+  </header>
+
+  <!-- 탭 메뉴: "병명으로 찾기"와 "증상으로 찾기" -->
+  <nav class="search-tabs">
+    <button id="tab-disease" class="active" onclick="switchTab('disease')">병명으로 찾기</button>
+    <button id="tab-symptom" onclick="switchTab('symptom')">증상으로 찾기</button>
+  </nav>
+
+  <main>
+    <!-- [1] 병명으로 찾기 섹션: 기존 인터랙티브 몸 이미지 및 부위별 문제 리스트 -->
+    <section id="disease-section">
+      <div class="body-container">
+        <!-- human-body.png 파일을 준비하세요. 이미지 좌표는 실제 이미지에 맞게 조정 -->
+        <img src="human-body.png" alt="인체 그림" usemap="#body-map">
+        <map name="body-map">
+          <area shape="rect" coords="80,20,160,80" alt="얼굴" onclick="showIssues('face')" href="javascript:void(0);">
+          <area shape="rect" coords="60,90,180,200" alt="두피" onclick="showIssues('scalp')" href="javascript:void(0);">
+          <area shape="rect" coords="40,210,100,350" alt="왼팔" onclick="showIssues('arms')" href="javascript:void(0);">
+          <area shape="rect" coords="140,210,200,350" alt="오른팔" onclick="showIssues('arms')" href="javascript:void(0);">
+          <area shape="rect" coords="70,360,170,500" alt="다리" onclick="showIssues('legs')" href="javascript:void(0);">
+          <area shape="rect" coords="90,510,150,580" alt="발" onclick="showIssues('feet')" href="javascript:void(0);">
+          <area shape="rect" coords="10,10,50,50" alt="전신" onclick="showIssues('whole_body')" href="javascript:void(0);">
+        </map>
+      </div>
+      <!-- 부위별 문제 리스트 컨테이너 -->
+      <div id="issues-container" class="hidden">
+        <h2 id="issue-title"></h2>
+        <ul id="issues-list"></ul>
+        <button id="close-list-btn" onclick="hideIssues()">전체보기로 돌아가기</button>
+      </div>
+    </section>
+
+    <!-- [2] 증상으로 찾기 섹션: 검색 인터페이스 -->
+    <section id="symptom-section" class="hidden">
+      <div class="search-form">
+        <input type="text" id="body-part-input" placeholder="몸의 부위를 입력하세요 (예: 얼굴, 두피 등)">
+        <button onclick="openBodySelector()">그림에서 선택하기</button>
+        <input type="text" id="symptom-input" placeholder="증상을 입력하세요">
+        <button onclick="searchSymptoms()">검색</button>
+      </div>
+      <!-- 검색 결과 목록 -->
+      <div id="search-results" class="hidden">
+        <h2>검색 결과</h2>
+        <ul id="results-list"></ul>
+      </div>
+    </section>
+
+    <!-- [3] 몸 선택 모달 (증상 검색 시 "그림에서 선택하기") -->
+    <div id="body-selector-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeBodySelector()">&times;</span>
+        <h2>몸의 부위를 선택하세요</h2>
+        <div class="body-container">
+          <img src="human-body.png" alt="인체 그림" usemap="#body-selector-map">
+          <map name="body-selector-map">
+            <area shape="rect" coords="80,20,160,80" alt="얼굴" onclick="selectBodyPart('얼굴')" href="javascript:void(0);">
+            <area shape="rect" coords="60,90,180,200" alt="두피" onclick="selectBodyPart('두피')" href="javascript:void(0);">
+            <area shape="rect" coords="40,210,200,350" alt="팔" onclick="selectBodyPart('팔')" href="javascript:void(0);">
+            <area shape="rect" coords="70,360,170,500" alt="다리" onclick="selectBodyPart('다리')" href="javascript:void(0);">
+            <area shape="rect" coords="90,510,150,580" alt="발" onclick="selectBodyPart('발')" href="javascript:void(0);">
+            <area shape="rect" coords="10,10,50,50" alt="전신" onclick="selectBodyPart('전신')" href="javascript:void(0);">
+          </map>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
